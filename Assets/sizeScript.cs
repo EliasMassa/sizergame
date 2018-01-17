@@ -6,6 +6,7 @@ public class sizeScript : MonoBehaviour
 {
     public float xScale = 1;
     public float yScale = 1;
+
     
 
     void Start()
@@ -14,8 +15,10 @@ public class sizeScript : MonoBehaviour
     }
 
     
-    void Update()
+    void FixedUpdate()
     {
+        transform.position = new Vector2(GameObject.FindGameObjectWithTag("Player").transform.position.x, (GameObject.FindGameObjectWithTag("Player").transform.position.y + 0.5f));
+ 
         transform.localScale = new Vector3(xScale, yScale, 1);
 
         if (Input.GetAxisRaw("Horizontal") > 0 && xScale < 3)
