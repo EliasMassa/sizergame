@@ -16,5 +16,19 @@ public class movementScript : MonoBehaviour
     {
 
         transform.Translate(Input.GetAxis("HorizontalMove") * 0.25f, 0, 0);
+
+        //if (Input.GetAxis("HorizontalMove") > 0)
+        //{
+        //    GetComponent<Rigidbody2D>().AddForce(Vector2.right);
+        //}
+
+        //if (Input.GetAxis("HorizontalMove") < 0)
+        //{
+        //    GetComponent<Rigidbody2D>().AddForce(Vector2.left);
+        //}
+
+
+
+
     }
 }
