@@ -7,6 +7,8 @@ public class sizeScript : MonoBehaviour
     public float xScale = 1;
     public float yScale = 1;
     public float yPosition;
+    
+    private float maxScale = 3;
 
     
 
@@ -18,7 +20,10 @@ public class sizeScript : MonoBehaviour
     
     void FixedUpdate()
     {
-        //transform.position = new Vector2(1, (GameObject.FindGameObjectWithTag("Player").transform.position.y + 2.5f));
+        transform.Translate(Input.GetAxis("HorizontalMove") * 0.25f, 0, 0);
+
+        HeightCheck();
+
 
         yPosition = GameObject.FindGameObjectWithTag("Player").transform.position.y;
 
@@ -35,18 +40,10 @@ public class sizeScript : MonoBehaviour
             xScale = 1;
         }
 
-        if (Input.GetAxisRaw("Vertical") > 0 && yScale <= 3)
+        if (Input.GetAxisRaw("Vertical") == 0)
         {
-            Mathf.Clamp(yScale, 1f, 3f);
-            yScale += 0.1f;
-            
-        }
-
-        if (Input.GetAxisRaw("Vertical") == 0 && yScale > 1)
-        {
-            Mathf.Clamp(yScale, 1f, 3f);
             yScale = 1f;
-            
+
         }
 
         if (Input.GetKeyUp("up"))
@@ -54,11 +51,54 @@ public class sizeScript : MonoBehaviour
 
             UpVertical();
         }
+
+        if (Input.GetAxisRaw("Vertical") > 0 && yScale <= maxScale)
+        {
+            Mathf.Clamp(yScale, 1f, 3f);
+            yScale += 0.1f;
+            
+        }
+
+        
+
+        if (yScale > maxScale)
+        {
+            yScale = maxScale;
+        }
+
+        
     }
+
 
     void UpVertical()
     {
-        transform.position = new Vector2(GameObject.FindGameObjectWithTag("Player").transform.position.x, (GameObject.FindGameObjectWithTag("Player").transform.position.y + (GameObject.FindGameObjectWithTag("Player").transform.localScale.y/3f)));
+        transform.position = new Vector2(GameObject.FindGameObjectWithTag("Player").transform.position.x, (GameObject.FindGameObjectWithTag("Player").transform.position.y + (GameObject.FindGameObjectWithTag("Player").transform.localScale.y/1.5f) * Time.deltaTime));
+    }
+
+    void HeightCheck()
+    {
+        RaycastHit2D hitLeft = Physics2D.Raycast(new Vector2(gameObject.transform.position.x + (-transform.localScale.x / 2), transform.localScale.y), Vector2.up);
+        RaycastHit2D hitRight = Physics2D.Raycast(new Vector2 (gameObject.transform.position.x + (transform.localScale.x / 2), transform.localScale.y), Vector2.up);
+        Debug.DrawRay(transform.position + (-transform.localScale / 2), Vector2.up, Color.green);
+        Debug.DrawRay(transform.position + (transform.localScale / 2), Vector2.up, Color.green);
+        if (hitLeft.collider != null || hitRight.collider != null)
+        {
+
+            if (hitLeft.point.y >= 2 && hitLeft.point.y < 3 || hitRight.point.y >= 2 && hitRight.point.y < 3)
+            {
+                maxScale = 2;
+
+            }
+            if (hitLeft.point.y >= 1 && hitLeft.point.y < 2 || hitRight.point.y >= 1 && hitRight.point.y < 2)
+            {
+                maxScale = 1;
+            }
+            else if (hitLeft.point.y >= 3 && hitRight.point.y >= 3)
+            {
+                maxScale = 3;
+            }
+
+        }
     }
 
 }

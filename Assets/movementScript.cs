@@ -15,7 +15,7 @@ public class movementScript : MonoBehaviour
     void FixedUpdate()
     {
 
-        transform.Translate(Input.GetAxis("HorizontalMove") * 0.25f, 0, 0);
+        
 
         //if (Input.GetAxis("HorizontalMove") > 0)
         //{
