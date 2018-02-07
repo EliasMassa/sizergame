@@ -9,8 +9,8 @@ public class sizeScript : MonoBehaviour
     public float yPosition;
     
     private float maxScale = 3;
-
-    
+    private Vector2 direction;
+    private int speed = 5;
 
     void Start()
     {
@@ -20,7 +20,13 @@ public class sizeScript : MonoBehaviour
     
     void FixedUpdate()
     {
-        transform.Translate(Input.GetAxis("HorizontalMove") * 0.25f, 0, 0);
+        //GetComponent<Rigidbody2D>().velocity = transform.forward * Input.GetAxis("HorizontalMove") * 100 * Time.deltaTime;
+        direction = Vector2.right;
+        direction = new Vector2(Input.GetAxis("HorizontalMove") * 100 * Time.deltaTime, 0);
+        direction.Normalize();
+        transform.Translate(direction * Time.deltaTime * speed);
+
+        Debug.Log(Input.GetAxis("HorizontalMove"));
 
         HeightCheck();
 
