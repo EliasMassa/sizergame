@@ -9,6 +9,7 @@ public class sizeScript : MonoBehaviour
     public float yPosition;
     
     private float maxScale = 3;
+    private float maxWidthScale = 3;
     private Vector2 direction;
     private int speed = 5;
 
@@ -26,16 +27,16 @@ public class sizeScript : MonoBehaviour
         direction.Normalize();
         transform.Translate(direction * Time.deltaTime * speed);
 
-        Debug.Log(Input.GetAxis("HorizontalMove"));
 
         HeightCheck();
+        WidthCheck();
 
 
         yPosition = GameObject.FindGameObjectWithTag("Player").transform.position.y;
 
         transform.localScale = new Vector3(xScale, yScale, 1);
 
-        if (Input.GetAxisRaw("Horizontal") > 0 && xScale <= 3)
+        if (Input.GetAxisRaw("Horizontal") > 0 && xScale <= maxWidthScale)
         {
             Mathf.Clamp(xScale, 1f, 3f);
             xScale += 0.1f;
@@ -83,26 +84,68 @@ public class sizeScript : MonoBehaviour
 
     void HeightCheck()
     {
-        RaycastHit2D hitLeft = Physics2D.Raycast(new Vector2(gameObject.transform.position.x + (-transform.localScale.x / 2), transform.localScale.y), Vector2.up);
-        RaycastHit2D hitRight = Physics2D.Raycast(new Vector2 (gameObject.transform.position.x + (transform.localScale.x / 2), transform.localScale.y), Vector2.up);
-        Debug.DrawRay(transform.position + (-transform.localScale / 2), Vector2.up, Color.green);
-        Debug.DrawRay(transform.position + (transform.localScale / 2), Vector2.up, Color.green);
+        RaycastHit2D hitLeft = Physics2D.Raycast(new Vector2(gameObject.transform.position.x + (-transform.localScale.x / 2), gameObject.transform.position.y + transform.localScale.y/2), Vector2.up);
+        RaycastHit2D hitRight = Physics2D.Raycast(new Vector2 (gameObject.transform.position.x + (transform.localScale.x / 2), gameObject.transform.position.y + transform.localScale.y/2), Vector2.up);
+
+        Debug.DrawRay(new Vector2(gameObject.transform.position.x + (-transform.localScale.x / 2), gameObject.transform.position.y + transform.localScale.y / 2), Vector2.up, Color.green);
+        Debug.DrawRay(new Vector2(gameObject.transform.position.x + (transform.localScale.x / 2), gameObject.transform.position.y + transform.localScale.y / 2), Vector2.up, Color.green);
+
+
         if (hitLeft.collider != null || hitRight.collider != null)
         {
 
-            if (hitLeft.point.y >= 2 && hitLeft.point.y < 3 || hitRight.point.y >= 2 && hitRight.point.y < 3)
+            if (hitLeft.point.y - transform.position.y > 1 && hitLeft.point.y - transform.position.y <= 1.6 || hitRight.point.y - transform.position.y > 1 && hitRight.point.y - transform.position.y <= 1.6)
             {
                 maxScale = 2;
 
             }
-            if (hitLeft.point.y >= 1 && hitLeft.point.y < 2 || hitRight.point.y >= 1 && hitRight.point.y < 2)
+            if (hitLeft.point.y - transform.position.y > 0 && hitLeft.point.y - transform.position.y <= 1 || hitRight.point.y - transform.position.y >= 0 && hitRight.point.y - transform.position.y <= 1)
             {
                 maxScale = 1;
             }
-            else if (hitLeft.point.y >= 3 && hitRight.point.y >= 3)
+            else if (hitLeft.point.y - transform.position.y > 1.8 && hitRight.point.y - transform.position.y > 1.8)
             {
                 maxScale = 3;
             }
+
+        }
+    }
+    void WidthCheck()
+    {
+        RaycastHit2D LowerHitLeft = Physics2D.Raycast(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - transform.localScale.y / 2), Vector2.left);
+        RaycastHit2D LowerHitRight = Physics2D.Raycast(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - transform.localScale.y / 2), Vector2.right);
+
+        RaycastHit2D upperHitLeft = Physics2D.Raycast(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + transform.localScale.y / 2), Vector2.left);
+        RaycastHit2D upperHitRight = Physics2D.Raycast(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + transform.localScale.y / 2), Vector2.right);
+
+        Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - transform.localScale.y / 2), Vector2.left, Color.blue);
+        Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - transform.localScale.y / 2), Vector2.right, Color.blue);
+
+        Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + transform.localScale.y / 2), Vector2.left, Color.blue);
+        Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + transform.localScale.y / 2), Vector2.right, Color.blue);
+
+        Debug.Log(LowerHitRight.point.x - LowerHitLeft.point.x);
+        Debug.Log(upperHitRight.point.x - upperHitLeft.point.x);
+
+        if (LowerHitLeft.collider != null || LowerHitRight.collider != null)
+        {
+
+            if (LowerHitRight.point.x - LowerHitLeft.point.x < 2.8 && LowerHitRight.point.x - LowerHitLeft.point.x >= 1.2 && upperHitRight.point.x - upperHitLeft.point.x < 2.8 && upperHitRight.point.x - upperHitLeft.point.x >= 1.2)
+            {
+                maxWidthScale = 2;
+
+            }
+            if (LowerHitRight.point.x - LowerHitLeft.point.x < 2 && upperHitRight.point.x - upperHitLeft.point.x < 2)
+            {
+                maxWidthScale = 1;
+
+            }
+            if (LowerHitRight.point.x - LowerHitLeft.point.x > 2.8 && upperHitRight.point.x - upperHitLeft.point.x > 2.8)
+            {
+                maxWidthScale = 3;
+
+            }
+
 
         }
     }
