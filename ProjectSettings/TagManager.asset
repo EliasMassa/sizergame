@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Trigger
+  - Door
+  - Door1
+  - Door2
+  - Trigger2
   layers:
   - Default
   - TransparentFX
