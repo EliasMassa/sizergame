@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Boo.Lang;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,14 +7,18 @@ public class sizeScript : MonoBehaviour
 {
     private float xScale = 1;
     private float yScale = 1;
-    
-    
+
+
     private float maxScale = 2.95f;
+    private float minScale = 0.95f;
     private float maxWidthScale = 2.95f;
- 
+
     private Rigidbody2D rb2d;
     public float maxSpeed = 5f;
     private float moveForce = 300f;
+
+    private bool leftTriggerActive;
+    private bool rightTriggerActive;
 
 
     void Awake()
@@ -21,13 +26,13 @@ public class sizeScript : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
     }
 
-    
+
     void FixedUpdate()
     {
 
 
         float h = Input.GetAxis("HorizontalMove");
-        
+
 
         if (h * rb2d.velocity.x < maxSpeed)
         {
@@ -38,12 +43,12 @@ public class sizeScript : MonoBehaviour
         {
             rb2d.velocity = new Vector2(Mathf.Sign(rb2d.velocity.x) * maxSpeed, rb2d.velocity.y);
         }
-   
+
         HeightCheck();
         WidthCheck();
 
 
-        
+
 
         transform.localScale = new Vector3(xScale, yScale, 1);
 
@@ -55,7 +60,11 @@ public class sizeScript : MonoBehaviour
 
         if (Input.GetAxisRaw("Horizontal") == 0)
         {
-            xScale = 0.95f;
+            if (xScale > minScale)
+            {
+                xScale -= 0.5f;
+            }
+            
         }
 
         if (Input.GetAxisRaw("Vertical") == 0)
@@ -74,10 +83,10 @@ public class sizeScript : MonoBehaviour
         {
             Mathf.Clamp(yScale, 0.95f, 2.95f);
             yScale += 0.1f;
-            
+
         }
 
-        
+
 
         if (yScale > maxScale)
         {
@@ -89,19 +98,24 @@ public class sizeScript : MonoBehaviour
             xScale = maxWidthScale;
         }
 
-        
+        if (xScale < minScale)
+        {
+            xScale = minScale;
+        }
+
+
     }
 
 
     void UpVertical()
     {
-        transform.position = new Vector2(GameObject.FindGameObjectWithTag("Player").transform.position.x, (GameObject.FindGameObjectWithTag("Player").transform.position.y + (GameObject.FindGameObjectWithTag("Player").transform.localScale.y/1.5f) * Time.deltaTime));
+        transform.position = new Vector2(GameObject.FindGameObjectWithTag("Player").transform.position.x, (GameObject.FindGameObjectWithTag("Player").transform.position.y + (GameObject.FindGameObjectWithTag("Player").transform.localScale.y / 1.5f) * Time.deltaTime));
     }
 
     void HeightCheck()
     {
-        RaycastHit2D hitLeft = Physics2D.Raycast(new Vector2(gameObject.transform.position.x + (-transform.localScale.x / 2), gameObject.transform.position.y + transform.localScale.y/2), Vector2.up);
-        RaycastHit2D hitRight = Physics2D.Raycast(new Vector2 (gameObject.transform.position.x + (transform.localScale.x / 2), gameObject.transform.position.y + transform.localScale.y/2), Vector2.up);
+        RaycastHit2D hitLeft = Physics2D.Raycast(new Vector2(gameObject.transform.position.x + (-transform.localScale.x / 2), gameObject.transform.position.y + transform.localScale.y / 2), Vector2.up);
+        RaycastHit2D hitRight = Physics2D.Raycast(new Vector2(gameObject.transform.position.x + (transform.localScale.x / 2), gameObject.transform.position.y + transform.localScale.y / 2), Vector2.up);
 
         Debug.DrawRay(new Vector2(gameObject.transform.position.x + (-transform.localScale.x / 2), gameObject.transform.position.y + transform.localScale.y / 2), Vector2.up, Color.green);
         Debug.DrawRay(new Vector2(gameObject.transform.position.x + (transform.localScale.x / 2), gameObject.transform.position.y + transform.localScale.y / 2), Vector2.up, Color.green);
@@ -149,10 +163,8 @@ public class sizeScript : MonoBehaviour
         Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + transform.localScale.y / 2), Vector2.left, Color.blue);
         Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + transform.localScale.y / 2), Vector2.right, Color.blue);
 
-        //Debug.Log(LowerHitRight.point.x - LowerHitLeft.point.x);
-        //Debug.Log(upperHitRight.point.x - upperHitLeft.point.x);
-        //Debug.Log(middleHitRight.point.x - middleHitLeft.point.x);
 
+        Debug.Log(middleHitRight.point.x - LowerHitLeft.point.x);
         if (LowerHitLeft.collider != null || LowerHitRight.collider != null)
         {
 
@@ -161,12 +173,12 @@ public class sizeScript : MonoBehaviour
                 maxWidthScale = 1.95f;
 
             }
-            if (LowerHitRight.point.x - LowerHitLeft.point.x < 1.1 || upperHitRight.point.x - upperHitLeft.point.x < 1.1 || middleHitRight.point.x - middleHitLeft.point.x < 1.1)
+            if (LowerHitRight.point.x - LowerHitLeft.point.x < 1.1 || upperHitRight.point.x - upperHitLeft.point.x < 1.1 || middleHitRight.point.x - middleHitLeft.point.x < 1.1 || middleHitRight.point.x - LowerHitLeft.point.x < 1.1)
             {
                 maxWidthScale = 0.95f;
 
             }
-            if (LowerHitRight.point.x - LowerHitLeft.point.x > 2.5 && upperHitRight.point.x - upperHitLeft.point.x > 2.5 && middleHitRight.point.x - middleHitLeft.point.x > 2.5)
+            if (LowerHitRight.point.x - LowerHitLeft.point.x > 2.5 && upperHitRight.point.x - upperHitLeft.point.x > 2.5 && middleHitRight.point.x - middleHitLeft.point.x > 2.5 && middleHitRight.point.x - LowerHitLeft.point.x > 2.5)
             {
                 maxWidthScale = 2.95f;
 
@@ -175,5 +187,4 @@ public class sizeScript : MonoBehaviour
 
         }
     }
-
 }

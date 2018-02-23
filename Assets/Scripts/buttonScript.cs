@@ -8,8 +8,8 @@ public class buttonScript : MonoBehaviour
     public float xPosition = 0;
     public float minHeight = 0;
     public float maxHeight = 0;
-    private bool leftTriggerActive = false;
-    private bool rightTriggerActive = false;
+    public bool TriggerActive = false;
+
     
     public string doorname;
 
@@ -29,18 +29,13 @@ public class buttonScript : MonoBehaviour
 
             Destroy(gameObject);
         }
-        else if (doorname == "Door2")
+        if (doorname == "Door2")
         {
-            if (other.CompareTag("Trigger"))
+            if (other.CompareTag("Trigger") || other.CompareTag("Trigger2"))
             {
-                Debug.Log("left");
-                leftTriggerActive = true;
+                TriggerActive = true;
             }
-            if (other.CompareTag("Trigger2"))
-            {
-                Debug.Log("right");
-                rightTriggerActive = true;
-            }
+
 
             DoorCheck();
         }
@@ -49,22 +44,17 @@ public class buttonScript : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D col)
     {
-        if (col.CompareTag("Trigger"))
-        {
-            leftTriggerActive = false;
-        }
-        if (col.CompareTag("Trigger2"))
-        {
-            rightTriggerActive = false;
-        }
+        TriggerActive = false;    
     }
 
     void DoorCheck()
     {
-        if (leftTriggerActive == true && rightTriggerActive == true)
+
+        if (GameObject.Find("Button (2)").GetComponent<buttonScript>().TriggerActive && GameObject.Find("Button (3)").GetComponent<buttonScript>().TriggerActive)
         {
-            Debug.Log("kikkel");
             GameObject.FindGameObjectWithTag(doorname).GetComponent<Rigidbody2D>().gravityScale = -0.5f;
+            Destroy(GameObject.Find("Button (2)"));
+            Destroy(GameObject.Find("Button (3)"));
         }
     }
 

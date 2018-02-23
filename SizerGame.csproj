@@ -93,8 +93,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\buttonScript.cs" />
-    <Compile Include="Assets\sizeScript.cs" />
+    <Compile Include="Assets\Scripts\buttonScript.cs" />
+    <Compile Include="Assets\Scripts\doorDestoyer.cs" />
+    <Compile Include="Assets\Scripts\elevatorScript.cs" />
+    <Compile Include="Assets\Scripts\eyeScript.cs" />
+    <Compile Include="Assets\Scripts\introScript.cs" />
+    <Compile Include="Assets\Scripts\sizeScript.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
