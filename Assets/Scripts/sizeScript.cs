@@ -26,7 +26,6 @@ public class sizeScript : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
     }
 
-
     void FixedUpdate()
     {
 
@@ -36,7 +35,7 @@ public class sizeScript : MonoBehaviour
 
         if (h * rb2d.velocity.x < maxSpeed)
         {
-            rb2d.AddForce(Vector2.right * h * moveForce);
+            rb2d.AddForce(Vector2.right * h * moveForce * Time.deltaTime);
         }
 
         if (Mathf.Abs(rb2d.velocity.x) > maxSpeed)
@@ -117,8 +116,8 @@ public class sizeScript : MonoBehaviour
         RaycastHit2D hitLeft = Physics2D.Raycast(new Vector2(gameObject.transform.position.x + (-transform.localScale.x / 2), gameObject.transform.position.y + transform.localScale.y / 2), Vector2.up);
         RaycastHit2D hitRight = Physics2D.Raycast(new Vector2(gameObject.transform.position.x + (transform.localScale.x / 2), gameObject.transform.position.y + transform.localScale.y / 2), Vector2.up);
 
-        Debug.DrawRay(new Vector2(gameObject.transform.position.x + (-transform.localScale.x / 2), gameObject.transform.position.y + transform.localScale.y / 2), Vector2.up, Color.green);
-        Debug.DrawRay(new Vector2(gameObject.transform.position.x + (transform.localScale.x / 2), gameObject.transform.position.y + transform.localScale.y / 2), Vector2.up, Color.green);
+        //Debug.DrawRay(new Vector2(gameObject.transform.position.x + (-transform.localScale.x / 2), gameObject.transform.position.y + transform.localScale.y / 2), Vector2.up, Color.green);
+        //Debug.DrawRay(new Vector2(gameObject.transform.position.x + (transform.localScale.x / 2), gameObject.transform.position.y + transform.localScale.y / 2), Vector2.up, Color.green);
 
         //Debug.Log(hitLeft.point.y - transform.position.y);
         if (hitLeft.collider != null || hitRight.collider != null)
@@ -154,17 +153,17 @@ public class sizeScript : MonoBehaviour
         RaycastHit2D upperHitLeft = Physics2D.Raycast(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + transform.localScale.y / 2 - 0.1f), Vector2.left);
         RaycastHit2D upperHitRight = Physics2D.Raycast(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + transform.localScale.y / 2 - 0.1f), Vector2.right);
 
-        Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - transform.localScale.y / 2), Vector2.left, Color.blue);
-        Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - transform.localScale.y / 2), Vector2.right, Color.blue);
+        //Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - transform.localScale.y / 2), Vector2.left, Color.blue);
+        //Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - transform.localScale.y / 2), Vector2.right, Color.blue);
 
-        Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y), Vector2.left, Color.blue);
-        Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y), Vector2.right, Color.blue);
+        //Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y), Vector2.left, Color.blue);
+        //Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y), Vector2.right, Color.blue);
 
-        Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + transform.localScale.y / 2), Vector2.left, Color.blue);
-        Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + transform.localScale.y / 2), Vector2.right, Color.blue);
+        //Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + transform.localScale.y / 2), Vector2.left, Color.blue);
+        //Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + transform.localScale.y / 2), Vector2.right, Color.blue);
 
 
-        Debug.Log(middleHitRight.point.x - LowerHitLeft.point.x);
+        
         if (LowerHitLeft.collider != null || LowerHitRight.collider != null)
         {
 

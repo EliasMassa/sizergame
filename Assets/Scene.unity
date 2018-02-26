@@ -1671,7 +1671,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 275714909}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -42.002, y: 20.502, z: 0}
+  m_LocalPosition: {x: -42.23, y: 0.58, z: 0}
   m_LocalScale: {x: 0.95, y: 0.95, z: 1}
   m_Children:
   - {fileID: 1254587994}
@@ -6971,6 +6971,7 @@ GameObject:
   - component: {fileID: 1254587992}
   - component: {fileID: 1254587991}
   - component: {fileID: 1254587990}
+  - component: {fileID: 1254587995}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -7042,12 +7043,23 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1254587989}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: -0, y: 0.05, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 275714910}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1254587995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1254587989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af8885256172a364bba7508f83f0af05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1280011240
 GameObject:
   m_ObjectHideFlags: 0
@@ -7438,7 +7450,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1359573655}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -71.68, y: -2.8, z: 0}
+  m_LocalPosition: {x: -71.68, y: -2.81, z: 0}
   m_LocalScale: {x: 21, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 868795015}
@@ -10819,7 +10831,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f732a9dab815fcc41bebf71a9dcf5acc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2927f77086b170c41b1ce95dd2dc4c53, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -12544,7 +12556,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2e4ee5794da7afd4f902730035c4c05f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f8da155f89b04bf4181f31fae006ccb2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
