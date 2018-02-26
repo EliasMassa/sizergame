@@ -16,6 +16,7 @@ public class eyeScript : MonoBehaviour {
     private float mouthOffset = 0.4f;
     private float mouthScale;
 
+    //Pelihahmon silmien ja suun animointi pelaajan sijainnin ja skaalan perusteella
 	void Update()
     {
         if(eyeName == 1 || eyeName == 2)

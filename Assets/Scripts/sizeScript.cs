@@ -13,9 +13,7 @@ public class sizeScript : MonoBehaviour
     private float minScale = 0.95f;
     private float maxWidthScale = 2.95f;
 
-    private Rigidbody2D rb2d;
-    public float maxSpeed = 5f;
-    private float moveForce = 300f;
+   
 
     private bool leftTriggerActive;
     private bool rightTriggerActive;
@@ -23,31 +21,19 @@ public class sizeScript : MonoBehaviour
 
     void Awake()
     {
-        rb2d = GetComponent<Rigidbody2D>();
+        
+    }
+
+    void Update()
+    {
+        
     }
 
     void FixedUpdate()
     {
-
-
-        float h = Input.GetAxis("HorizontalMove");
-
-
-        if (h * rb2d.velocity.x < maxSpeed)
-        {
-            rb2d.AddForce(Vector2.right * h * moveForce * Time.deltaTime);
-        }
-
-        if (Mathf.Abs(rb2d.velocity.x) > maxSpeed)
-        {
-            rb2d.velocity = new Vector2(Mathf.Sign(rb2d.velocity.x) * maxSpeed, rb2d.velocity.y);
-        }
-
+        //Pelaajahahmon skaalan muuttaminen ja maksimikoon rajoittaminen
         HeightCheck();
         WidthCheck();
-
-
-
 
         transform.localScale = new Vector3(xScale, yScale, 1);
 
@@ -113,26 +99,30 @@ public class sizeScript : MonoBehaviour
 
     void HeightCheck()
     {
+        //yläpuoleisen tilan korkeutta tarkistavat raycastit
         RaycastHit2D hitLeft = Physics2D.Raycast(new Vector2(gameObject.transform.position.x + (-transform.localScale.x / 2), gameObject.transform.position.y + transform.localScale.y / 2), Vector2.up);
+        RaycastHit2D hitMiddle = Physics2D.Raycast(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + transform.localScale.y / 2), Vector2.up);
         RaycastHit2D hitRight = Physics2D.Raycast(new Vector2(gameObject.transform.position.x + (transform.localScale.x / 2), gameObject.transform.position.y + transform.localScale.y / 2), Vector2.up);
 
-        //Debug.DrawRay(new Vector2(gameObject.transform.position.x + (-transform.localScale.x / 2), gameObject.transform.position.y + transform.localScale.y / 2), Vector2.up, Color.green);
-        //Debug.DrawRay(new Vector2(gameObject.transform.position.x + (transform.localScale.x / 2), gameObject.transform.position.y + transform.localScale.y / 2), Vector2.up, Color.green);
+        Debug.DrawRay(new Vector2(gameObject.transform.position.x + (-transform.localScale.x / 2), gameObject.transform.position.y + transform.localScale.y / 2), Vector2.up, Color.green);
+        Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + transform.localScale.y / 2), Vector2.up, Color.green);
+        Debug.DrawRay(new Vector2(gameObject.transform.position.x + (transform.localScale.x / 2), gameObject.transform.position.y + transform.localScale.y / 2), Vector2.up, Color.green);
 
         //Debug.Log(hitLeft.point.y - transform.position.y);
+
         if (hitLeft.collider != null || hitRight.collider != null)
         {
 
-            if (hitLeft.point.y - transform.position.y > 1 && hitLeft.point.y - transform.position.y <= 1.6 || hitRight.point.y - transform.position.y > 1 && hitRight.point.y - transform.position.y <= 1.6)
+            if (hitLeft.point.y - transform.position.y > 1 && hitLeft.point.y - transform.position.y <= 1.6 || hitRight.point.y - transform.position.y > 1 && hitRight.point.y - transform.position.y <= 1.6 || hitMiddle.point.y - transform.position.y > 1 && hitMiddle.point.y - transform.position.y <= 1.6)
             {
                 maxScale = 1.95f;
 
             }
-            if (hitLeft.point.y - transform.position.y > 0 && hitLeft.point.y - transform.position.y <= 1 || hitRight.point.y - transform.position.y >= 0 && hitRight.point.y - transform.position.y <= 1)
+            if (hitLeft.point.y - transform.position.y > 0 && hitLeft.point.y - transform.position.y <= 1 || hitRight.point.y - transform.position.y >= 0 && hitRight.point.y - transform.position.y <= 1 || hitMiddle.point.y - transform.position.y >= 0 && hitMiddle.point.y - transform.position.y <= 1)
             {
                 maxScale = 0.95f;
             }
-            if (hitLeft.point.y - transform.position.y > 1.5 && hitRight.point.y - transform.position.y > 1.5)
+            if (hitLeft.point.y - transform.position.y > 1.5 && hitRight.point.y - transform.position.y > 1.5 && hitMiddle.point.y - transform.position.y > 1.5)
             {
                 maxScale = 2.95f;
             }
@@ -141,6 +131,7 @@ public class sizeScript : MonoBehaviour
     }
     void WidthCheck()
     {
+        //Tarkastetaan sivusuuntaisen tilan leveys 
         //Alemmat castit
         RaycastHit2D LowerHitLeft = Physics2D.Raycast(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - transform.localScale.y / 2 + 0.1f), Vector2.left);
         RaycastHit2D LowerHitRight = Physics2D.Raycast(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - transform.localScale.y / 2 + 0.1f), Vector2.right);
@@ -153,14 +144,14 @@ public class sizeScript : MonoBehaviour
         RaycastHit2D upperHitLeft = Physics2D.Raycast(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + transform.localScale.y / 2 - 0.1f), Vector2.left);
         RaycastHit2D upperHitRight = Physics2D.Raycast(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + transform.localScale.y / 2 - 0.1f), Vector2.right);
 
-        //Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - transform.localScale.y / 2), Vector2.left, Color.blue);
-        //Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - transform.localScale.y / 2), Vector2.right, Color.blue);
+        Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - transform.localScale.y / 2), Vector2.left, Color.blue);
+        Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - transform.localScale.y / 2), Vector2.right, Color.blue);
 
-        //Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y), Vector2.left, Color.blue);
-        //Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y), Vector2.right, Color.blue);
+        Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y), Vector2.left, Color.blue);
+        Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y), Vector2.right, Color.blue);
 
-        //Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + transform.localScale.y / 2), Vector2.left, Color.blue);
-        //Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + transform.localScale.y / 2), Vector2.right, Color.blue);
+        Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + transform.localScale.y / 2), Vector2.left, Color.blue);
+        Debug.DrawRay(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + transform.localScale.y / 2), Vector2.right, Color.blue);
 
 
         
@@ -184,6 +175,18 @@ public class sizeScript : MonoBehaviour
             }
 
 
+        }
+
+
+    }
+
+    //Peli menee kiinni pelaajan mentyä kentän loppuun
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Finish"))
+        {
+            Application.Quit();
+            Debug.Log("lobbu");
         }
     }
 }

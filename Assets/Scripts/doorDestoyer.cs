@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class doorDestoyer : MonoBehaviour
 {
-
-    void Update()
-    {
-
-    }
-
+    //Ovi tuhotaan kun pois näkyvistä
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Finish"))

@@ -4,20 +4,16 @@ using UnityEngine;
 
 public class cameraScript : MonoBehaviour {
 
-    private float playerPositionX;
-    private float playerPositionY;
+    private GameObject player;
 
-
-    private void Update()
+    //Kamera seuraa pelihahmon koordinaatteja
+    private void Start()
     {
-        
-
+       player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    void FixedUpdate ()
+    void LateUpdate ()
     {
-        //playerPositionX = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>().position.x;
-        //playerPositionY = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>().position.y;
-        //transform.position = new Vector3(playerPositionX, playerPositionY, -1);
+        transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -1);
     }
 }

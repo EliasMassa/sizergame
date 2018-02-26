@@ -10,9 +10,9 @@ public class buttonScript : MonoBehaviour
     public float maxHeight = 0;
     public bool TriggerActive = false;
 
-    
     public string doorname;
 
+    //Pelihahmon painamat napit vaikuttavat vastaavan oven painovoimaan 
     void Update()
     {
         transform.position = new Vector2(xPosition, Mathf.Clamp(transform.position.y, minHeight, maxHeight));
